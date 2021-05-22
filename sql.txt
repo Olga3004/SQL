@@ -45,3 +45,4 @@ where Product.type = 'laptop')
 
 
 Задание: 7
+Заданрие: 8
