@@ -32,18 +32,42 @@ and price < 600
 Задание: 6 
 Для каждого производителя, выпускающего ПК-блокноты c объёмом жесткого диска не менее 10 Гбайт, найти скорости таких ПК-блокнотов. 
 Вывод: производитель, скорость.
-Select Maker, Laptop.speed from Product
-inner join Laptop
-on Product.model = laptop.model
-where hd >= 10
-
-
-Select Distinct Product.Maker, Laptop.speed from Product, laptop
-where hd >= 10 and
-type in (select type from Product
-where Product.type = 'laptop')
-
+Решение:
+SELECT DISTINCT product.maker, laptop.speed
+FROM Product
+INNER JOIN Laptop ON product.model = laptop.model
+WHERE laptop.hd >= 10
 
 Задание: 7
+Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
+Решение:
+SELECT Product.model, price
+FROM Product INNER JOIN 
+Printer ON Product.model = Printer.model
+Where maker = 'B' 
+UNION
+SELECT Product.model, price
+FROM Product INNER JOIN 
+Laptop ON Product.model = Laptop.model
+Where maker = 'B' 
+UNION
+SELECT Product.model, price
+FROM Product INNER JOIN 
+PC ON Product.model = PC.model
+Where maker = 'B'
+
 Задание: 8
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+Решение:
+
 Задание: 9
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+Решение:
+SELECT DISTINCT product.maker
+FROM Product
+INNER JOIN PC ON product.model = PC.model
+WHERE PC.speed >= 450
+
+Задание: 10
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+Решение:
