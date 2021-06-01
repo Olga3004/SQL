@@ -210,10 +210,30 @@ SELECT price FROM Printer) t2 )
 Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди всех ПК,
 имеющих наименьший объем RAM. Вывести: Maker
 Решение:
+SELECT DISTINCT maker FROM product
+WHERE model IN (SELECT model FROM pc
+WHERE ram = (SELECT MIN(ram) FROM pc)
+AND speed = (SELECT MAX(speed) FROM pc
+WHERE ram = (SELECT MIN(ram) FROM pc)))
+AND maker IN (SELECT maker FROM product
+WHERE type ='printer');
 
 Задание: 26 
 Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя цена.
 Решение:
+Select Count ( PC.price) AS AVG_price from PC
+Where model IN (Select model From Product Where maker = 'A')
+UNION
+Select AVG ( Laptop.price) AS AVG_price from Laptop
+inner join Product on Product.model = Laptop.model
+Where maker = 'A'
+
+SELECT COUNT(*) AS Qty
+FROM PC
+WHERE model IN(SELECT model
+ FROM Product
+ WHERE maker = 'A'
+ );
 
 Задание: 27 
 Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.
