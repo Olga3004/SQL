@@ -221,23 +221,15 @@ WHERE type ='printer');
 Задание: 26 
 Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя цена.
 Решение:
-Select Count ( PC.price) AS AVG_price from PC
-Where model IN (Select model From Product Where maker = 'A')
-UNION
-Select AVG ( Laptop.price) AS AVG_price from Laptop
-inner join Product on Product.model = Laptop.model
-Where maker = 'A'
 
-SELECT COUNT(*) AS Qty
-FROM PC
-WHERE model IN(SELECT model
- FROM Product
- WHERE maker = 'A'
- );
 
 Задание: 27 
 Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.
 Решение:
+Select Product.maker, AVG(pc.hd) from Product, PC
+Where Product.model = PC.model AND 
+Product.maker in (Select Distinct maker from Product Where product.type = 'Printer')
+Group by maker
 
 Задание: 28 
 Используя таблицу Product, определить количество производителей, выпускающих по одной модели.
