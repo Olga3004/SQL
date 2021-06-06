@@ -266,4 +266,11 @@ AND t1.date = t2.date
 В предположении, что приход и расход денег на каждом пункте приема фиксируется произвольное число раз (первичным ключом в таблицах является столбец code), требуется получить таблицу,
 в которой каждому пункту за каждую дату выполнения операций будет соответствовать одна строка.
 Вывод: point, date, суммарный расход пункта за день (out), суммарный приход пункта за день (inc). Отсутствующие значения считать неопределенными (NULL).
+Решение:
+select point, date, SUM(sum_out), SUM(sum_inc)
+from( select point, date, SUM(inc) as sum_inc, null as sum_out from Income Group by point, date
+Union
+select point, date, null as sum_inc, SUM(out) as sum_out from Outcome Group by point, date ) as t
+group by point, date order by point
+
 
